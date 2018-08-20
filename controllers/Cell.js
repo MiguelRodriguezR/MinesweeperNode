@@ -6,6 +6,7 @@ const FLAG = "P"
 
 //class definition
 class Cell {
+  
   constructor(x,y) {
     this.position = {x,y}
     this.options = {
@@ -15,12 +16,15 @@ class Cell {
       isMine:false
     }
   }
+
   getPosition(){
     return this.position;
   }
+
   getOptions(){
     return this.options;
   }
+
   getCharacter(){
     if(this.options.isFlagged){
       return FLAG;
@@ -48,10 +52,6 @@ class Cell {
     }
   }
 
-  addNearMine(){
-    this.options.nearMines+=1;
-  }
-
   setRevealed(){
     this.options.isRevealed = true;
     this.options.isFlagged = false;
@@ -70,6 +70,10 @@ class Cell {
       }
     }
 
+  }
+
+  addNearMine(){
+    this.options.nearMines+=1;
   }
 
   isMine(){

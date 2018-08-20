@@ -10,9 +10,9 @@ class Game {
   }
 
   start(){
-
     this.setup();
     this.game();
+    console.clear();
     console.log("GAME OVER YOU "+this.board.getGameState()+" !");
     this.board.uncoverBoard();
     this.board.drawBoard();
@@ -27,12 +27,12 @@ class Game {
     while(ok!=true){
       inputs = conif.getConsoleInput("enter the height, width, and number of mines: ", false);
       inputs = inputs.split(" ");
-      ok = this.validateInputs(inputs,1)
+      ok = this.validateInputs(inputs,'setup')
       if(ok == true){
         this.board.setBoard(inputs[0],inputs[1],inputs[2]);
       }
       else{
-        console.clear()
+        console.clear();
         console.log(ok.error);
       }
     }
@@ -44,12 +44,12 @@ class Game {
     let inputs;
 
     while(!this.gameOver){
-      // console.clear()
+      console.clear()
       this.board.drawBoard();
       if(ok.hasOwnProperty('error'))console.log(ok.error);
       inputs = conif.getConsoleInput("select one cell by entering its row and column index and an action(u=uncover/m=mark) ", false);
       inputs = inputs.split(" ");
-      ok = this.validateInputs(inputs,2);
+      ok = this.validateInputs(inputs,'game');
       if(ok== true){
         this.gameOver = this.board.executeAction(inputs[0],inputs[1],inputs[2]);
         if(!this.gameOver){
@@ -60,7 +60,7 @@ class Game {
   }
 
   validateInputs(inputs,stage){
-    if(stage == 1){
+    if(stage == 'setup'){
       if(inputs.length!=3){
         return {error:"please enter the correct amount of setup options, for example:(3 3 1)"}
       }

@@ -5,7 +5,6 @@ const Cell = require('../controllers/Cell');
 class Board {
   constructor() {
     this.gameState = "LOSE"
-
   }
 
   setBoard(x,y,m){
@@ -15,7 +14,6 @@ class Board {
     this.minePositions = [];
     this.createCells();
     this.plantMines();
-
   }
 
   getSize(){
@@ -24,6 +22,32 @@ class Board {
 
   getGameState(){
     return this.gameState;
+  }
+
+  getClose(cell){
+    let close = [],
+    x = cell.getPosition().x,
+    y = cell.getPosition().y;
+    
+    //left near cell section
+    if(x!=0){
+      close.push(this.cells[x-1][y]);
+      if(y!=0)close.push(this.cells[x-1][y-1]);
+      if(y!=(this.size.y-1))close.push(this.cells[x-1][y+1]);
+    }
+
+    //center near cell section
+    if(y!=0)close.push(this.cells[x][y-1]);
+    if(y!=(this.size.y-1))close.push(this.cells[x][y+1]);
+
+    //right near cell section
+    if(x!=(this.size.x-1)){
+      close.push(this.cells[x+1][y]);
+      if(y!=0)close.push(this.cells[x+1][y-1]);
+      if(y!=(this.size.y-1))close.push(this.cells[x+1][y+1]);
+    }
+
+    return close;
   }
 
   createCells(){
@@ -38,55 +62,24 @@ class Board {
 
   checkWin(){
     let ok = 0;
+
     if(this.mines == this.flags){
       this.minePositions.forEach((e)=>{
         if(this.cells[e.x][e.y].isFlagged()){
           ok+=1;
         }
-        console.log(e);
       });
-      console.log(ok);
       if(ok == this.mines){
-        this.gameState = "WON"
+        this.gameState = "WIN"
         return true;
       }
     }
     return false;
   }
 
-  plantMines(){
-    let m=0;
-    let x=0;
-    let y=0;
-    while(m<this.mines){
-      x = Math.floor(Math.random()*(this.size.x-1))
-      y = Math.floor(Math.random()*(this.size.y-1))
-      if(this.cells[x][y].setMine()){
-
-        this.minePositions.push({x,y})
-        //left near Mine's section
-        if(x!=0){
-          this.cells[x-1][y].addNearMine();
-          if(y!=0)this.cells[x-1][y-1].addNearMine();
-          if(y!=(this.size.y-1))this.cells[x-1][y+1].addNearMine();
-        }
-        //center near Mine's section
-        if(y!=0)this.cells[x][y-1].addNearMine();
-        if(y!=(this.size.y-1))this.cells[x][y+1].addNearMine();
-
-        //right near Mine's section
-        if(x!=(this.size.x-1)){
-          this.cells[x+1][y].addNearMine();
-          if(y!=0)this.cells[x+1][y-1].addNearMine();
-          if(y!=(this.size.y-1))this.cells[x+1][y+1].addNearMine();
-        }
-        m+=1;
-      }
-    }
-  }
-
   drawBoard(){
-    let output = "   |"
+    let output = "   |";
+
     for (var y = 0; y < this.size.y; y++) {
       output+=""+y+"|"
     }
@@ -105,46 +98,44 @@ class Board {
     });
   }
 
+  plantMines(){
+    let m=0,x=0,y=0,nears;
+      while(m<this.mines){
+        x = Math.floor(Math.random()*(this.size.x-1));
+        y = Math.floor(Math.random()*(this.size.y-1));
+        if(this.cells[x][y].setMine()){
+          this.minePositions.push({x,y})
+          this.getClose(this.cells[x][y]).forEach((e)=>{
+            e.addNearMine();
+          });
+          m+=1;
+        }
+      }
+  }
+
   executeAction(x,y,type){
-    x = Number(x);
+    x = Number(x),
     y = Number(y);
+
+    // if user select 'u' then uncover the position x,y
     if(type=="u"){
       if(this.cells[x][y].isMine()){
         this.cells[x][y].setRevealed()
         //GAME OVER
-
         return true
-
       }
       else if(!this.cells[x][y].isRevealed() && this.cells[x][y].setRevealed()){
-
-        //left disable section
-        if(x!=0){
-          this.executeAction(x-1,y,"u");
-          if(y!=0)this.executeAction(x-1,y-1,"u");
-          if(y!=(this.size.y-1))this.executeAction(x-1,y+1,"u");
-        }
-
-        //center disable section
-        if(y!=0)this.executeAction(x,y-1,"u");
-        if(y!=(this.size.y-1))this.executeAction(x,y+1,"u");
-
-        //right disable section
-        if(x!=(this.size.x-1)){
-          this.executeAction(x+1,y,"u");
-          if(y!=0)this.executeAction(x+1,y-1,"u");
-          if(y!=(this.size.y-1))this.executeAction(x+1,y+1,"u");
-        }
-
+        this.getClose(this.cells[x][y]).forEach((e)=>{
+          this.executeAction(e.getPosition().x,e.getPosition().y,"u")
+        });
       }
     }
+
+    // if user select 'm' then mark the position x,y
     else{
       this.flags+=this.cells[x][y].setFlagged();
-
     }
   }
-
-
 }
 
 module.exports = Board
