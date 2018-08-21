@@ -1,8 +1,4 @@
-//AUTHOR
-const AUTHOR =
-"///////////////////////////////////////////\n"+
-"// Minesweeper - Miguel Rodriguez - 2018 //\n"+
-"///////////////////////////////////////////\n"
+
 
 //imports
 const Board = require('../controllers/Board');
@@ -17,7 +13,7 @@ class Game {
   }
 
   start(){
-    console.log(AUTHOR);
+    
     this.setup();
     this.game();
     console.clear();
