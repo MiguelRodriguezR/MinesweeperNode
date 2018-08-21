@@ -28,7 +28,7 @@ class Board {
     let close = [],
     x = cell.getPosition().x,
     y = cell.getPosition().y;
-    
+
     //left near cell section
     if(x!=0){
       close.push(this.cells[x-1][y]);
@@ -78,18 +78,19 @@ class Board {
   }
 
   drawBoard(){
-    let output = "   |";
+    let output = "   \t|";
 
     for (var y = 0; y < this.size.y; y++) {
       output+=""+y+"|"
     }
     for (var x = 0; x < this.size.x; x++) {
-      output+="\n|"+x+"|"
+      output+="\n|"+x+"|\t"
       for (var y = 0; y < this.size.y; y++) {
         output+=" "+this.cells[x][y].getCharacter();
       }
     }
     console.log(output);
+    //return output;
   }
 
   uncoverBoard(){
