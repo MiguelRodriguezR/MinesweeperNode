@@ -4,9 +4,9 @@ This is a console/terminal game based on minesweeper made for node.js
 <br><img src="img/IU.jpg" alt="IU picture" />
 
 # Table of Contents
-* [Installation](#Installation)
-* [Testing](#Testing)
-* [People](#People)
+* [Installation](#installation)
+* [Testing](#testing)
+* [People](#people)
 
 ## Installation
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
@@ -33,7 +33,7 @@ To test this program you need to [`checkout`](https://git-scm.com/docs/git-check
 then you can use `npm test` command
 
 ```bash
-  $ npm start
+  $ npm test
 ```
 
 ## People
