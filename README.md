@@ -12,7 +12,7 @@ This is a console/terminal game based on minesweeper made for node.js
 Before installing, [download and install Node.js](https://nodejs.org/en/download/).
 Node.js 0.10 or higher is required.
 
-you con use the
+You can use the
 [`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) to install dependencies:
 
 To run the game use `npm start` command
