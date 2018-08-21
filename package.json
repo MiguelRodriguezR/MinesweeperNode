@@ -1,0 +1,30 @@
+{
+  "name": "minesweepernode",
+  "version": "1.0.0",
+  "description": "console game minesweeper for nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/test.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelRodriguezR/MinesweeperNode.git"
+  },
+  "keywords": [
+    "minesweeper"
+  ],
+  "author": "Miguel Rodriguez",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/MiguelRodriguezR/MinesweeperNode/issues"
+  },
+  "homepage": "https://github.com/MiguelRodriguezR/MinesweeperNode#readme",
+  "dependencies": {
+    "node-console-input": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
