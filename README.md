@@ -26,6 +26,7 @@ have fun! :wink:
 
 ## Testing
 To test this program you need to [`checkout`](https://git-scm.com/docs/git-checkout) from master branch to develop branch
+
 ```bash
   $ git checkout develop
 ```
