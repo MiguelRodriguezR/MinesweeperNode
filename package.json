@@ -4,7 +4,7 @@
   "description": "console game minesweeper for nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./test/test.js",
     "start": "node index.js"
   },
   "repository": {
@@ -22,5 +22,9 @@
   "homepage": "https://github.com/MiguelRodriguezR/MinesweeperNode#readme",
   "dependencies": {
     "node-console-input": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
   }
 }

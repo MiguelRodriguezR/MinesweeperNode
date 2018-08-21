@@ -1,6 +1,13 @@
+//AUTHOR
+const AUTHOR =
+"///////////////////////////////////////////\n"+
+"// Minesweeper - Miguel Rodriguez - 2018 //\n"+
+"///////////////////////////////////////////\n"
+
 //imports
 const Board = require('../controllers/Board');
 const conif = require('node-console-input');
+
 
 //class definition
 class Game {
@@ -10,6 +17,7 @@ class Game {
   }
 
   start(){
+    console.log(AUTHOR);
     this.setup();
     this.game();
     console.clear();
@@ -59,37 +67,54 @@ class Game {
     }
   }
 
+
+  validateSetupInputs(inputs){
+    if(inputs.length!=3){
+      return {error:"please enter the correct amount of setup options, for example:(3 3 1)"}
+    }
+    if(inputs[0]<1 || inputs[1]<1){
+      return {error:"number of cells must be > 0"}
+    }
+    if(inputs[2]<1){
+      return {error:"number of mines must be > 0"}
+    }
+    if(!Number.isInteger(inputs[0])||
+    !Number.isInteger(inputs[1])||
+    !Number.isInteger(inputs[2])){
+      return {error:"please enter integer numbers only, for example:(3 3 1)"}
+    }
+    if(inputs[0]*inputs[1]<inputs[2]){
+      return {error:"the Number of cells must be less than the quantity of mines"}
+    }
+    return true;
+  }
+
+  validateGameInputs(inputs){
+    if(inputs.length!=3){
+      return {error:"please enter the correct amount of game options, for example:(3 3 u)"}
+    }
+
+    if(!Number.isInteger(Number(inputs[0]))||
+    !Number.isInteger(Number(inputs[1]))){
+      return {error:"please enter integer numbers only, for example:(3 3 u)"}
+    }
+    if(this.board.getSize().x<=Number(inputs[0]) ||
+       this.board.getSize().y<=Number(inputs[1]) ||
+       Number(inputs[0])<0 || Number(inputs[1])<0){
+       return {error:"cell ["+inputs[0]+"]["+inputs[1]+"] does not exist"}
+    }
+    if(inputs[2]!='u' && inputs[2]!='m'){
+      return {error:"third input must be 'm' or 'u'"}
+    }
+    return true
+  }
+
   validateInputs(inputs,stage){
     if(stage == 'setup'){
-      if(inputs.length!=3){
-        return {error:"please enter the correct amount of setup options, for example:(3 3 1)"}
-      }
-      if(!Number.isInteger(Number(inputs[0]))||
-      !Number.isInteger(Number(inputs[1]))||
-      !Number.isInteger(Number(inputs[2]))){
-        return {error:"please enter integer numbers only, for example:(3 3 1)"}
-      }
-      if(Number(inputs[0])*Number(inputs[1])<Number(inputs[2])){
-        return {error:"the Number of cells must be less than the quantity of mines"}
-      }
+      return this.validateSetupInputs(inputs.map(e=>Number(e)));
     }
     else{
-      if(inputs.length!=3){
-        return {error:"please enter the correct amount of game options, for example:(3 3 u)"}
-      }
-
-      if(!Number.isInteger(Number(inputs[0]))||
-      !Number.isInteger(Number(inputs[1]))){
-        return {error:"please enter integer numbers only, for example:(3 3 u)"}
-      }
-      console.log(this.board.getSize().x);
-      if(this.board.getSize().x<=inputs[0] ||
-         this.board.getSize().y<=inputs[1]){
-        return {error:"cell ["+inputs[0]+"]["+inputs[1]+"] does not exist"}
-      }
-      if(inputs[2]!='u' && inputs[2]!='m'){
-        return {error:"third input must be 'm' or 'u'"}
-      }
+      return this.validateGameInputs(inputs);
     }
     return true
   }
