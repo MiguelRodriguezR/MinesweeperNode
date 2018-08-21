@@ -102,8 +102,8 @@ class Board {
   plantMines(){
     let m=0,x=0,y=0,nears;
       while(m<this.mines){
-        x = Math.floor(Math.random()*(this.size.x-1));
-        y = Math.floor(Math.random()*(this.size.y-1));
+        x = Math.floor(Math.random()*(this.size.x));
+        y = Math.floor(Math.random()*(this.size.y));
         if(this.cells[x][y].setMine()){
           this.minePositions.push({x,y})
           this.getClose(this.cells[x][y]).forEach((e)=>{
