@@ -13,7 +13,7 @@ Before installing, [download and install Node.js](https://nodejs.org/en/download
 Node.js 0.10 or higher is required.
 
 You can use the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) to install dependencies:
+[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) command to install dependencies:
 
 To run the game use `npm start` command
 
